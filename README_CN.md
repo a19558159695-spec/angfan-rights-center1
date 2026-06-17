@@ -48,3 +48,11 @@ Cloudflare Pages will redeploy automatically.
 - 产品分类调整为：家居产品、电子产品、美容产品、其他产品
 - 导航和页面细节改成更像正常购物网站
 - 增加顶部搜索、购物车入口、客服邮箱、分类卡片、产品卡片细节
+
+
+## English version update
+
+- All visible website navigation and main page text has been changed to English.
+- Store name: ANGFAN BRAND SHOP
+- Categories: Home Products, Electronic Products, Beauty Products, Other Products
+- The product detail layout remains shopping-site style.

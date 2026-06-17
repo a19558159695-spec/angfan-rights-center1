@@ -51,7 +51,7 @@ function productCard(p){
       <div style="color:#777;font-size:13px">${escapeHtml(p.category)} · SKU ${escapeHtml(p.sku)}</div>
       <h3>${escapeHtml(p.title)}</h3>
       <div class="price">${escapeHtml(p.price || '')}</div>
-      <span class="tag">产品展示</span>
+      <span class="tag">Product Display</span>
     </div>
   </a>`;
 }
@@ -60,7 +60,7 @@ async function renderHome(){
   const el = document.querySelector("#home-products");
   if(!el) return;
   const products = await loadProducts();
-  el.innerHTML = products.slice(0,8).map(productCard).join("") || "<p>暂无产品。</p>";
+  el.innerHTML = products.slice(0,8).map(productCard).join("") || "<p>No products yet.</p>";
 }
 
 async function renderProducts(){
@@ -72,7 +72,7 @@ async function renderProducts(){
   const cat = params.get("category") || "";
   if(cat) products = products.filter(p => p.category === cat);
   if(q) products = products.filter(p => (p.title+" "+p.brand+" "+p.sku+" "+p.asin+" "+p.description).toLowerCase().includes(q));
-  grid.innerHTML = products.map(productCard).join("") || "<p>未找到产品。</p>";
+  grid.innerHTML = products.map(productCard).join("") || "<p>No products found.</p>";
 }
 
 async function renderProduct(){
@@ -85,7 +85,7 @@ async function renderProduct(){
   document.title = `${p.title} - ${SITE_NAME}`;
   const imgs = (p.gallery_images || p.main_image || "/main.svg").split("|").map(x=>x.trim()).filter(Boolean);
   root.innerHTML = `
-    <div class="breadcrumb">首页 / ${escapeHtml(p.category)} / ${escapeHtml(p.title)}</div>
+    <div class="breadcrumb">Home / ${escapeHtml(p.category)} / ${escapeHtml(p.title)}</div>
     <div class="product-layout">
       <div>
         <div class="gallery-main"><img id="mainPhoto" src="${escapeHtml(imgs[0])}" alt="${escapeHtml(p.title)}"></div>
@@ -93,37 +93,37 @@ async function renderProduct(){
       </div>
       <div class="product-info">
         <h1>${escapeHtml(p.title)}</h1>
-        <div class="rating">★★★★★ <span style="color:#777">产品详情</span></div>
-        <div class="info-line"><b>品牌</b><span>${escapeHtml(p.brand || SITE_NAME)}</span></div>
+        <div class="rating">★★★★★ <span style="color:#777">Product Details</span></div>
+        <div class="info-line"><b>Brand</b><span>${escapeHtml(p.brand || SITE_NAME)}</span></div>
         <div class="info-line"><b>SKU</b><span>${escapeHtml(p.sku)}</span></div>
         <div class="info-line"><b>ASIN</b><span>${escapeHtml(p.asin)}</span></div>
-        <div class="info-line"><b>上架时间</b><span>${escapeHtml(p.first_release_time)}</span></div>
-        <div class="info-line"><b>版权信息</b><span>Copyright belongs to ${RIGHTS_OWNER}</span></div>
+        <div class="info-line"><b>Launch Time</b><span>${escapeHtml(p.first_release_time)}</span></div>
+        <div class="info-line"><b>Copyright Information</b><span>Copyright belongs to ${RIGHTS_OWNER}</span></div>
         <div class="description">${escapeHtml(p.description)}</div>
         <div class="qty-row">
-          <b>数量</b>
+          <b>Qty</b>
           <div class="qty-box"><button onclick="let q=document.getElementById('qty');q.value=Math.max(1,+q.value-1)">-</button><input id="qty" value="1"><button onclick="let q=document.getElementById('qty');q.value=+q.value+1">+</button></div>
         </div>
         <div class="actions">
-          <button class="btn" onclick="addToCart(\`${p.slug}\`)">🛒 加入购物车</button>
+          <button class="btn" onclick="addToCart(\`${p.slug}\`)">🛒 Add To Cart</button>
           <button class="btn icon">♡</button>
           <button class="btn icon">⇄</button>
         </div>
         <div class="options">
-          <h2>产品选项</h2>
+          <h2>Available Options</h2>
           <div class="option-field">
-            <label><span style="color:#dc2626">*</span> 产品上架时间：</label>
+            <label><span style="color:#dc2626">*</span> Product launch time:</label>
             <input value="${escapeHtml(p.first_release_time)}" readonly>
           </div>
         </div>
       </div>
     </div>
     <div class="tabs">
-      <div class="tab-head"><div>产品描述</div><div>产品信息</div></div>
+      <div class="tab-head"><div>Description</div><div>Product Information</div></div>
       <div class="tab-body">
         <p>${escapeHtml(p.description)}</p>
-        <p><b>客服邮箱：</b> ${RIGHTS_EMAIL}</p>
-        <p>如需更多产品信息，请联系客户服务。</p>
+        <p><b>Customer Service:</b> ${RIGHTS_EMAIL}</p>
+        <p>For more product information, please contact customer service.</p>
       </div>
     </div>`;
 }
@@ -157,7 +157,7 @@ async function addToCart(slug){
     qty
   });
   saveCart(cart);
-  showToast("已加入购物车");
+  showToast("Added to cart");
 }
 
 function removeCartItem(slug){
@@ -186,7 +186,7 @@ function renderCartPage(){
   if(!root) return;
   const cart = getCart();
   if(!cart.length){
-    root.innerHTML = `<div class="cart-empty">购物车为空。<a href="/products.html" style="color:#2563eb">查看产品</a></div>`;
+    root.innerHTML = `<div class="cart-empty">Your cart is empty. <a href="/products.html" style="color:#2563eb">View products</a></div>`;
     return;
   }
   const rows = cart.map(item => `
@@ -200,11 +200,11 @@ function renderCartPage(){
   const inquiry = cart.map(item => `${item.title} | SKU: ${item.sku} | ASIN: ${item.asin} | Qty: ${item.qty}`).join("%0A");
   root.innerHTML = `
     <table class="cart-table">
-      <thead><tr><th>图片</th><th>产品</th><th>价格</th><th>数量</th><th>移除</th></tr></thead>
+      <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Qty</th><th>Remove</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
     <div class="cart-actions">
-      <a class="btn" href="mailto:ANGFANBRAND163@163.COM?subject=产品咨询 - ANGFAN 品牌店&body=${inquiry}">发送询盘</a>
+      <a class="btn" href="mailto:ANGFANBRAND163@163.COM?subject=Product Inquiry - ANGFAN BRAND SHOP&body=${inquiry}">Send Inquiry</a>
       <a class="btn icon" href="/products.html" title="Continue shopping">+</a>
       <button class="btn icon" onclick="clearCart()" title="Clear cart">🗑</button>
     </div>`;

@@ -1,2 +1,2 @@
 id,slug,title,brand,category,sku,asin,price,first_release_time,copyright_owner,main_image,gallery_images,description,status
-1001,product-sample,ANGFAN Product Sample,ANGFAN,美容产品,BS-001,B0XXXXXXX,$0.00,2026-06-17,LUWANJUN,/main.svg,/main.svg|/1.svg|/2.svg|/3.svg|/4.svg,欢迎来到我们的品牌店铺。本页面展示产品图片、产品规格、SKU/ASIN 信息和产品详情。如需更多产品信息，请联系客户服务。,published
+1001,product-sample,ANGFAN Product Sample,ANGFAN,Beauty Products,BS-001,B0XXXXXXX,$0.00,2026-06-17,LUWANJUN,/main.svg,/main.svg|/1.svg|/2.svg|/3.svg|/4.svg,"Welcome to our official brand shop. This page displays product images, product specifications, SKU/ASIN information, and product details. For more product information, please contact customer service.",published
