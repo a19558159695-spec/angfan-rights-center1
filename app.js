@@ -106,8 +106,8 @@ async function renderProduct(){
         </div>
         <div class="actions">
           <button class="btn" onclick="addToCart(\`${p.slug}\`)">🛒 Add To Cart</button>
-          <button class="btn icon">♡</button>
-          <button class="btn icon">⇄</button>
+          <button class="btn icon" id="wishlistBtn" onclick="toggleWishlist(`${p.slug}`)">♡</button>
+          <button class="btn icon" id="compareBtn" onclick="toggleCompare(`${p.slug}`)">⇄</button>
         </div>
         <div class="options">
           <h2>Available Options</h2>
@@ -211,9 +211,70 @@ function renderCartPage(){
 }
 
 
+
+function getWishlist(){
+  try { return JSON.parse(localStorage.getItem("brandShopWishlist") || "[]"); }
+  catch(e){ return []; }
+}
+function saveWishlist(items){ localStorage.setItem("brandShopWishlist", JSON.stringify(items)); }
+function getCompare(){
+  try { return JSON.parse(localStorage.getItem("brandShopCompare") || "[]"); }
+  catch(e){ return []; }
+}
+function saveCompare(items){ localStorage.setItem("brandShopCompare", JSON.stringify(items)); }
+
+async function toggleWishlist(slug){
+  const products = await loadProducts();
+  const p = products.find(x => x.slug === slug);
+  if(!p) return;
+  let items = getWishlist();
+  const exists = items.find(x => x.slug === slug);
+  if(exists){
+    items = items.filter(x => x.slug !== slug);
+    saveWishlist(items);
+    updateActionButtonStates(slug);
+    showToast("Removed from wishlist");
+  }else{
+    items.push({slug:p.slug,title:p.title});
+    saveWishlist(items);
+    updateActionButtonStates(slug);
+    showToast("Added to wishlist");
+  }
+}
+
+async function toggleCompare(slug){
+  const products = await loadProducts();
+  const p = products.find(x => x.slug === slug);
+  if(!p) return;
+  let items = getCompare();
+  const exists = items.find(x => x.slug === slug);
+  if(exists){
+    items = items.filter(x => x.slug !== slug);
+    saveCompare(items);
+    updateActionButtonStates(slug);
+    showToast("Removed from compare");
+  }else{
+    items.push({slug:p.slug,title:p.title});
+    saveCompare(items);
+    updateActionButtonStates(slug);
+    showToast("Added to compare");
+  }
+}
+
+function updateActionButtonStates(slug){
+  const wish = getWishlist().some(x => x.slug === slug);
+  const compare = getCompare().some(x => x.slug === slug);
+  const wb = document.getElementById("wishlistBtn");
+  const cb = document.getElementById("compareBtn");
+  if(wb) wb.classList.toggle("active-heart", wish);
+  if(cb) cb.classList.toggle("active-compare", compare);
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   renderHome();
   renderProducts();
   renderProduct();
+  setTimeout(() => { const slug = new URLSearchParams(location.search).get('slug'); if (slug) updateActionButtonStates(slug); }, 50);
   renderCartPage();
 });

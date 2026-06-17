@@ -56,3 +56,18 @@ Cloudflare Pages will redeploy automatically.
 - Store name: ANGFAN BRAND SHOP
 - Categories: Home Products, Electronic Products, Beauty Products, Other Products
 - The product detail layout remains shopping-site style.
+
+
+## 本次修改：删除首页欢迎语下面的介绍句
+
+- 已删除首页横幅标题下方的产品介绍句。
+- 首页只保留标题，不显示“浏览精选产品、产品类别、产品图片、规格、SKU/ASIN 信息和产品详情”这类说明。
+
+
+## 本次修改：英文版进一步优化
+
+- 已删除首页欢迎标题下方的介绍句
+- 收藏（心形）和对比（箭头）按钮已改为可点击
+- 新增 Wishlist / Compare 的本地存储交互效果
+- Contact 已加入主页主导航栏
+- 整体配色和卡片细节进一步优化，更接近大型购物网站风格
