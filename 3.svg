@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
+<rect width="900" height="900" fill="#f6f7fb"/>
+<rect x="80" y="80" width="740" height="740" rx="42" fill="#ffffff" stroke="#d8dde8" stroke-width="4"/>
+<text x="450" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#111827">PRODUCT IMAGE</text>
+<text x="450" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#6b7280">Upload your own product photo</text>
+<text x="450" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#2563eb">ANGFAN</text>
+<text x="450" y="615" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#9ca3af">Copyright Protected</text>
+</svg>
