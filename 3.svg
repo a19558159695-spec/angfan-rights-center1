@@ -6,6 +6,6 @@
 <circle cx="420" cy="420" r="24" fill="#111827"/>
 <circle cx="580" cy="420" r="24" fill="#111827"/>
 <text x="500" y="685" text-anchor="middle" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#111827">ANGFAN</text>
-<text x="500" y="750" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" fill="#6b7280">Product Image</text>
-<text x="500" y="810" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#9ca3af">Official Product Store</text>
+<text x="500" y="750" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" fill="#6b7280">Official Product Store</text>
+<text x="500" y="810" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#9ca3af">Product Photo</text>
 </svg>
