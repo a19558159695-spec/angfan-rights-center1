@@ -1,5 +1,5 @@
 
-const SITE_NAME = "BRAND SHOP";
+const SITE_NAME = "ANGFAN ANGFAN BRAND SHOP";
 const RIGHTS_OWNER = "LUWANJUN";
 const RIGHTS_EMAIL = "ANGFANBRAND163@163.COM";
 const CSV_URL = "/products.csv";
@@ -10,6 +10,8 @@ document.addEventListener("contextmenu", e => {
 document.addEventListener("dragstart", e => {
   if (e.target.tagName === "IMG") e.preventDefault();
 });
+
+function escapeAttr(s){ return String(s || '').replace(/'/g, "&#39;").replace(/"/g, '&quot;'); }
 
 function escapeHtml(s){
   return String(s || "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -103,7 +105,7 @@ async function renderProduct(){
           <div class="qty-box"><button onclick="let q=document.getElementById('qty');q.value=Math.max(1,+q.value-1)">-</button><input id="qty" value="1"><button onclick="let q=document.getElementById('qty');q.value=+q.value+1">+</button></div>
         </div>
         <div class="actions">
-          <button class="btn">🛒 Add To Cart</button>
+          <button class="btn" onclick="addToCart(\`${p.slug}\`)">🛒 Add To Cart</button>
           <button class="btn icon">♡</button>
           <button class="btn icon">⇄</button>
         </div>
@@ -126,8 +128,92 @@ async function renderProduct(){
     </div>`;
 }
 
+
+function getCart(){
+  try { return JSON.parse(localStorage.getItem("brandShopCart") || "[]"); }
+  catch(e) { return []; }
+}
+
+function saveCart(cart){
+  localStorage.setItem("brandShopCart", JSON.stringify(cart));
+}
+
+async function addToCart(slug){
+  const products = await loadProducts();
+  const p = products.find(x => x.slug === slug);
+  if(!p) return;
+  const qtyInput = document.getElementById("qty");
+  const qty = Math.max(1, parseInt(qtyInput ? qtyInput.value : "1", 10) || 1);
+  const cart = getCart();
+  const existing = cart.find(item => item.slug === slug);
+  if(existing) existing.qty += qty;
+  else cart.push({
+    slug: p.slug,
+    title: p.title,
+    sku: p.sku,
+    asin: p.asin,
+    price: p.price,
+    image: p.main_image || "/main.svg",
+    qty
+  });
+  saveCart(cart);
+  showToast("Added to cart");
+}
+
+function removeCartItem(slug){
+  const cart = getCart().filter(item => item.slug !== slug);
+  saveCart(cart);
+  renderCartPage();
+}
+
+function clearCart(){
+  saveCart([]);
+  renderCartPage();
+}
+
+function showToast(message){
+  const old = document.querySelector(".toast");
+  if(old) old.remove();
+  const el = document.createElement("div");
+  el.className = "toast";
+  el.textContent = message;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1800);
+}
+
+function renderCartPage(){
+  const root = document.querySelector("#cart-page");
+  if(!root) return;
+  const cart = getCart();
+  if(!cart.length){
+    root.innerHTML = `<div class="cart-empty">Your cart is empty. <a href="/products.html" style="color:#2563eb">View products</a></div>`;
+    return;
+  }
+  const rows = cart.map(item => `
+    <tr>
+      <td><img src="${escapeHtml(item.image)}" alt=""></td>
+      <td><b>${escapeHtml(item.title)}</b><br><span style="color:#666">SKU: ${escapeHtml(item.sku)} | ASIN: ${escapeHtml(item.asin)}</span></td>
+      <td>${escapeHtml(item.price || "")}</td>
+      <td>${item.qty}</td>
+      <td><button class="btn icon" onclick="removeCartItem('${escapeAttr(item.slug)}')">×</button></td>
+    </tr>`).join("");
+  const inquiry = cart.map(item => `${item.title} | SKU: ${item.sku} | ASIN: ${item.asin} | Qty: ${item.qty}`).join("%0A");
+  root.innerHTML = `
+    <table class="cart-table">
+      <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Qty</th><th>Remove</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="cart-actions">
+      <a class="btn" href="mailto:ANGFANBRAND163@163.COM?subject=Product Inquiry - ANGFAN BRAND SHOP&body=${inquiry}">Send Inquiry</a>
+      <a class="btn icon" href="/products.html" title="Continue shopping">+</a>
+      <button class="btn icon" onclick="clearCart()" title="Clear cart">🗑</button>
+    </div>`;
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   renderHome();
   renderProducts();
   renderProduct();
+  renderCartPage();
 });
