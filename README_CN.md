@@ -71,3 +71,13 @@ Cloudflare Pages will redeploy automatically.
 - 新增 Wishlist / Compare 的本地存储交互效果
 - Contact 已加入主页主导航栏
 - 整体配色和卡片细节进一步优化，更接近大型购物网站风格
+
+
+## 本次修改：跳转与页脚文字
+
+- 已删除页脚中的 "Official online product store displaying product categories, product images, specifications, and product details."
+- Add To Cart 点击后会跳转到 Cart 页面
+- 心形按钮点击后会跳转到 Wishlist 页面
+- 对比按钮点击后会跳转到 Compare 页面
+- 新增 wishlist.html 和 compare.html
+- 顶部右侧加入 Wishlist / Compare 快捷入口

@@ -158,6 +158,7 @@ async function addToCart(slug){
   });
   saveCart(cart);
   showToast("Added to cart");
+  setTimeout(() => { window.location.href = "/cart.html"; }, 450);
 }
 
 function removeCartItem(slug){
@@ -234,11 +235,13 @@ async function toggleWishlist(slug){
     saveWishlist(items);
     updateActionButtonStates(slug);
     showToast("Removed from wishlist");
+    setTimeout(() => { window.location.href = "/wishlist.html"; }, 450);
   }else{
     items.push({slug:p.slug,title:p.title});
     saveWishlist(items);
     updateActionButtonStates(slug);
     showToast("Added to wishlist");
+    setTimeout(() => { window.location.href = "/wishlist.html"; }, 450);
   }
 }
 
@@ -253,11 +256,13 @@ async function toggleCompare(slug){
     saveCompare(items);
     updateActionButtonStates(slug);
     showToast("Removed from compare");
+    setTimeout(() => { window.location.href = "/compare.html"; }, 450);
   }else{
     items.push({slug:p.slug,title:p.title});
     saveCompare(items);
     updateActionButtonStates(slug);
     showToast("Added to compare");
+    setTimeout(() => { window.location.href = "/compare.html"; }, 450);
   }
 }
 
@@ -271,10 +276,73 @@ function updateActionButtonStates(slug){
 }
 
 
+
+async function renderWishlistPage(){
+  const root = document.querySelector("#wishlist-page");
+  if(!root) return;
+  const items = getWishlist();
+  if(!items.length){
+    root.innerHTML = `<div class="cart-empty">Your wishlist is empty. <a href="/products.html" style="color:#2563eb">View products</a></div>`;
+    return;
+  }
+  const products = await loadProducts();
+  const rows = items.map(item => {
+    const p = products.find(x => x.slug === item.slug) || item;
+    return `<tr>
+      <td><img src="${escapeHtml(p.main_image || '/main.svg')}" alt=""></td>
+      <td><b>${escapeHtml(p.title)}</b><br><span style="color:#666">SKU: ${escapeHtml(p.sku || '')} | ASIN: ${escapeHtml(p.asin || '')}</span></td>
+      <td><a class="btn" href="/product.html?slug=${encodeURIComponent(p.slug)}">View Product</a></td>
+      <td><button class="btn icon" onclick="removeWishlistItem('${escapeAttr(p.slug)}')">×</button></td>
+    </tr>`;
+  }).join("");
+  root.innerHTML = `<table class="cart-table">
+    <thead><tr><th>Image</th><th>Product</th><th>Action</th><th>Remove</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function removeWishlistItem(slug){
+  saveWishlist(getWishlist().filter(item => item.slug !== slug));
+  renderWishlistPage();
+}
+
+async function renderComparePage(){
+  const root = document.querySelector("#compare-page");
+  if(!root) return;
+  const items = getCompare();
+  if(!items.length){
+    root.innerHTML = `<div class="cart-empty">No products selected for comparison. <a href="/products.html" style="color:#2563eb">View products</a></div>`;
+    return;
+  }
+  const products = await loadProducts();
+  const rows = items.map(item => {
+    const p = products.find(x => x.slug === item.slug) || item;
+    return `<tr>
+      <td><img src="${escapeHtml(p.main_image || '/main.svg')}" alt=""></td>
+      <td><b>${escapeHtml(p.title)}</b><br><span style="color:#666">Category: ${escapeHtml(p.category || '')}</span></td>
+      <td>SKU: ${escapeHtml(p.sku || '')}<br>ASIN: ${escapeHtml(p.asin || '')}</td>
+      <td><a class="btn" href="/product.html?slug=${encodeURIComponent(p.slug)}">View Product</a></td>
+      <td><button class="btn icon" onclick="removeCompareItem('${escapeAttr(p.slug)}')">×</button></td>
+    </tr>`;
+  }).join("");
+  root.innerHTML = `<table class="cart-table">
+    <thead><tr><th>Image</th><th>Product</th><th>Info</th><th>Action</th><th>Remove</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function removeCompareItem(slug){
+  saveCompare(getCompare().filter(item => item.slug !== slug));
+  renderComparePage();
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   renderHome();
   renderProducts();
   renderProduct();
   setTimeout(() => { const slug = new URLSearchParams(location.search).get('slug'); if (slug) updateActionButtonStates(slug); }, 50);
   renderCartPage();
+  renderWishlistPage();
+  renderComparePage();
 });
