@@ -4,7 +4,7 @@ const CONFIG = {
   // Example: https://docs.google.com/spreadsheets/d/e/xxxx/pub?output=csv
   googleSheetCsvUrl: "",
   localCsvUrl: "/products.csv",
-  siteName: "ANGFAN Product Copyright Center"
+  siteName: "BRAND SHOP"
 };
 
 document.addEventListener("contextmenu", e => {

@@ -1,5 +1,5 @@
 
-# ANGFAN Product Copyright Center 静态网站
+# BRAND SHOP 静态网站
 
 这是一个可以部署到 Cloudflare Pages / GitHub Pages 的产品版权展示站。
 
@@ -172,3 +172,22 @@ Cloudflare Pages 部署设置：
 Framework preset: None
 Build command: 留空
 Build output directory: /
+
+
+## 本次修改：去掉品牌页面
+
+- 已删除 brand-rights.html
+- 已从所有页面顶部导航栏删除 Brand Rights 入口
+- 网站只保留 Home / Products / Copyright Notice / Contact
+
+
+## 本次修改：店铺名称
+
+- 网站顶部店铺名称已从 ANGFAN Rights Center 改为 BRAND SHOP
+- 页面标题和页脚中的网站名称也已同步改为 BRAND SHOP
+- Brand Rights 品牌页仍保持删除状态
+
+
+## 本次修改：店铺名称大写
+
+- 网站店铺名称已统一改为：BRAND SHOP
