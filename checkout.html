@@ -14,7 +14,6 @@
     <span>Customer Service: ANGFANBRAND163@163.COM</span>
   </div>
 </div>
-
 <header class="site-header">
   <div class="header-inner">
     <a class="logo" href="/"><span>ANGFAN</span><b>Brand Shop</b></a>
@@ -31,10 +30,9 @@
     </div>
   </div>
 </header>
-
 <nav class="main-nav">
   <div class="nav-inner">
-    <a href="/" class="active">Home</a>
+    <a href="/" class="">Home</a>
     <a href="/products.html" class="">Products</a>
     <a href="/products.html?category=Home%20Products" class="">Home Products</a>
     <a href="/products.html?category=Electronic%20Products" class="">Electronic Products</a>
@@ -44,66 +42,64 @@
   </div>
 </nav>
 
-
-
-<main class="container">
+<main class="checkout-page">
   <div class="breadcrumb">Home / Checkout</div>
-  <section class="checkout-layout">
-    <div class="checkout-card">
-      <h1>Checkout</h1>
-
-      <div class="checkout-section">
-        <h2>Contact Information</h2>
-        <div class="form-grid">
-          <label>Full Name<input id="checkoutName" placeholder="Full name"></label>
-          <label>Email<input id="checkoutEmail" placeholder="email@example.com"></label>
-          <label>Phone<input id="checkoutPhone" placeholder="Phone number"></label>
+  <h1 class="checkout-title">Checkout</h1>
+  <section class="amazon-checkout-layout">
+    <div class="checkout-main">
+      <div class="amazon-step">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <h2>Shipping address</h2>
+          <div class="form-grid">
+            <label>Full Name<input id="checkoutName" placeholder="Full name"></label>
+            <label>Email<input id="checkoutEmail" placeholder="email@example.com"></label>
+            <label>Phone<input id="checkoutPhone" placeholder="Phone number"></label>
+            <label>Address<input id="checkoutAddress" placeholder="Street address"></label>
+            <label>City<input id="checkoutCity" placeholder="City"></label>
+            <label>State<input id="checkoutState" placeholder="State"></label>
+            <label>ZIP Code<input id="checkoutZip" placeholder="ZIP code"></label>
+            <label>Country<input id="checkoutCountry" value="United States"></label>
+          </div>
         </div>
       </div>
 
-      <div class="checkout-section">
-        <h2>Shipping Address</h2>
-        <div class="form-grid">
-          <label>Address<input id="checkoutAddress" placeholder="Street address"></label>
-          <label>City<input id="checkoutCity" placeholder="City"></label>
-          <label>State<input id="checkoutState" placeholder="State"></label>
-          <label>ZIP Code<input id="checkoutZip" placeholder="ZIP code"></label>
-          <label>Country<input id="checkoutCountry" value="United States"></label>
+      <div class="amazon-step">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <h2>Payment method</h2>
+          <div class="payment-options">
+            <label class="payment-card"><input type="radio" name="payMethod" checked> Credit or Debit Card</label>
+            <label class="payment-card"><input type="radio" name="payMethod"> PayPal</label>
+            <label class="payment-card"><input type="radio" name="payMethod"> Invoice / Manual Payment</label>
+          </div>
+          <div class="form-grid card-fields">
+            <label>Card Number<input id="cardNumber" placeholder="Card number"></label>
+            <label>Name on Card<input id="cardName" placeholder="Name on card"></label>
+            <label>Expiration<input id="cardExp" placeholder="MM / YY"></label>
+            <label>CVV<input id="cardCvv" placeholder="CVV"></label>
+          </div>
+          <p class="checkout-note">This static checkout page collects order details only. To accept real payments, connect Stripe, PayPal, Shopify, or OpenCart payment processing.</p>
         </div>
       </div>
 
-      <div class="checkout-section">
-        <h2>Payment Method</h2>
-        <div class="payment-methods">
-          <label><input type="radio" name="payMethod" value="Credit Card" checked> Credit Card</label>
-          <label><input type="radio" name="payMethod" value="PayPal"> PayPal</label>
-          <label><input type="radio" name="payMethod" value="Invoice"> Invoice / Manual Payment</label>
+      <div class="amazon-step">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <h2>Review items and shipping</h2>
+          <div id="checkout-items"></div>
         </div>
-        <div class="form-grid card-fields">
-          <label>Card Number<input id="cardNumber" placeholder="Card number"></label>
-          <label>Expiration<input id="cardExp" placeholder="MM / YY"></label>
-          <label>CVV<input id="cardCvv" placeholder="CVV"></label>
-          <label>Name on Card<input id="cardName" placeholder="Name on card"></label>
-        </div>
-        <p class="checkout-note">This static checkout page is for order collection and storefront presentation. To accept real card payments, connect Stripe, PayPal, or a payment link.</p>
       </div>
-
-      <div class="checkout-actions">
-        <button class="checkout-submit" type="button" onclick="placeDemoOrder()">Place Order</button>
-        <a class="checkout-secondary" href="/cart.html">Back to Cart</a>
-      </div>
-
-      <div id="order-message"></div>
     </div>
 
-    <aside class="order-summary">
-      <h2>Order Summary</h2>
+    <aside class="order-summary-card">
+      <button class="place-order-main" type="button" onclick="placeDemoOrder()">Place your order</button>
+      <p class="secure-note">Secure checkout summary</p>
       <div id="checkout-summary"></div>
+      <div id="order-message"></div>
     </aside>
   </section>
 </main>
-
-
 
 <footer class="footer">
   <div class="footer-inner">
