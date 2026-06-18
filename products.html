@@ -55,7 +55,7 @@
       <p>View all products and categories</p>
     </section>
 
-    <div id="product-status" style="margin:20px 0;color:#64748b;">Loading products...</div>
+    <div id="product-status" class="product-status">Loading products...</div>
     <div id="angfan-product-grid" class="angfan-product-grid"></div>
   </main>
 
@@ -68,13 +68,13 @@
   </footer>
 
   <style>
+    .product-status { margin:20px 0;color:#64748b; }
     .angfan-product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 24px;
       margin: 36px 0 60px;
     }
-
     .angfan-product-card {
       background: #fff;
       border: 1px solid #e6edf7;
@@ -83,24 +83,25 @@
       overflow: hidden;
       transition: .2s ease;
     }
-
     .angfan-product-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 14px 32px rgba(15,23,42,.14);
     }
-
-    .angfan-product-image {
-      width: 100%;
+    .angfan-product-image-wrap {
       height: 220px;
+      background: linear-gradient(180deg,#f8fafc,#eef5ff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    .angfan-product-image {
+      max-width:100%;
+      max-height:100%;
       object-fit: contain;
-      background: #f8fafc;
-      padding: 18px;
+      display:block;
     }
-
-    .angfan-product-info {
-      padding: 18px;
-    }
-
+    .angfan-product-info { padding: 18px; }
     .angfan-category {
       display: inline-block;
       font-size: 12px;
@@ -111,7 +112,6 @@
       padding: 5px 10px;
       margin-bottom: 10px;
     }
-
     .angfan-product-title {
       font-size: 18px;
       line-height: 1.35;
@@ -119,13 +119,11 @@
       color: #0f172a;
       font-weight: 800;
     }
-
     .angfan-meta {
       font-size: 13px;
       color: #475569;
       margin: 4px 0;
     }
-
     .angfan-description {
       font-size: 14px;
       color: #334155;
@@ -133,13 +131,11 @@
       margin-top: 12px;
       min-height: 64px;
     }
-
     .angfan-buttons {
       display: flex;
       gap: 10px;
       margin-top: 16px;
     }
-
     .angfan-buttons a {
       flex: 1;
       text-align: center;
@@ -149,16 +145,8 @@
       font-weight: 700;
       font-size: 14px;
     }
-
-    .angfan-view {
-      background: #2563eb;
-      color: #fff;
-    }
-
-    .angfan-contact {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
+    .angfan-view { background: #2563eb; color: #fff; }
+    .angfan-contact { background: #f1f5f9; color: #0f172a; }
   </style>
 
   <script>
@@ -195,10 +183,7 @@
         }
       }
 
-      if (cell || row.length) {
-        row.push(cell);
-        rows.push(row);
-      }
+      if (cell || row.length) rows.push([...row, cell]);
 
       const headers = rows.shift().map(h => h.trim());
       return rows.filter(r => r.length).map(r => {
@@ -229,9 +214,7 @@
 
       let list = products.filter(p => !p.status || p.status.toLowerCase() === "published");
 
-      if (category) {
-        list = list.filter(p => (p.category || "") === category);
-      }
+      if (category) list = list.filter(p => (p.category || "") === category);
 
       if (q) {
         list = list.filter(p =>
@@ -260,7 +243,9 @@
 
         return `
           <div class="angfan-product-card">
-            <img class="angfan-product-image" src="${safeText(image)}" alt="${safeText(title)}">
+            <div class="angfan-product-image-wrap">
+              <img class="angfan-product-image" src="${safeText(image)}" alt="${safeText(title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/main.svg';">
+            </div>
             <div class="angfan-product-info">
               <span class="angfan-category">${safeText(category)}</span>
               <h3 class="angfan-product-title">${safeText(title)}</h3>

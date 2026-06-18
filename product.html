@@ -1,38 +1,322 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Product Detail - ANGFAN BRAND SHOP</title>
-<meta name="description" content="ANGFAN BRAND SHOP official online product store.">
-<link rel="stylesheet" href="/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Product Detail - ANGFAN BRAND SHOP</title>
+  <meta name="description" content="ANGFAN BRAND SHOP official online product detail page.">
+  <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
-<div class="topbar"><div class="topbar-inner"><div>Official Online Product Store</div><div>Customer Service: ANGFANBRAND163@163.COM</div></div></div>
-<header class="header"><div class="header-inner">
-  <a class="logo" href="/"><span class="brand-word">ANGFAN</span><span class="shop-word">BRAND SHOP</span><span class="logo-badge">Official</span></a>
-  <form class="searchbar" action="/products.html"><input name="q" placeholder="Search products, SKU, ASIN..."><button>Search</button></form>
-  <div class="header-actions"><a class="header-action" href="/cart.html">Cart</a><a class="header-action" href="/wishlist.html">Wishlist</a><a class="header-action" href="/compare.html">Compare</a><a class="header-action" href="/contact.html">Contact</a></div>
-</div></header>
-<nav class="nav"><div class="nav-inner">
-  <a href="/">Home</a>
-  <a href="/products.html">All Products</a>
-  <a href="/products.html?category=Home%20Products">Home Products</a>
-  <a href="/products.html?category=Electronic%20Products">Electronic Products</a>
-  <a href="/products.html?category=Beauty%20Products">Beauty Products</a>
-  <a href="/products.html?category=Other%20Products">Other Products</a>
-  <a href="/contact.html">Contact</a>
-</div></nav>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>Official Online Product Store</div>
+      <div>Customer Service: ANGFANBRAND163@163.COM</div>
+    </div>
+  </div>
 
-<main class="container">
-  <div id="product-detail"></div>
-</main>
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <span class="brand-word">ANGFAN</span>
+        <span class="shop-word">BRAND SHOP</span>
+        <span class="logo-badge">Official</span>
+      </a>
 
-<footer class="footer"><div class="footer-inner">
-  <div><h3>ANGFAN BRAND SHOP</h3></div>
-  <div><h3>Product Categories</h3><p>Home Products / Electronic Products / Beauty Products / Other Products</p></div>
-  <div><h3>Customer Service</h3><p>Email: ANGFANBRAND163@163.COM</p></div>
-</div></footer>
-<script src="/app.js"></script>
+      <form class="searchbar" action="/products.html">
+        <input name="q" placeholder="Search products, SKU, ASIN...">
+        <button>Search</button>
+      </form>
+
+      <div class="header-actions">
+        <a class="header-action" href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/">Home</a>
+      <a href="/products.html">All Products</a>
+      <a href="/products.html?category=Home%20Products">Home Products</a>
+      <a href="/products.html?category=Electronic%20Products">Electronic Products</a>
+      <a href="/products.html?category=Beauty%20Products">Beauty Products</a>
+      <a href="/products.html?category=Other%20Products">Other Products</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/products.html">Products</a> / Product Detail</div>
+    <div id="product-detail" class="product-detail-loading">Loading product...</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><h3>ANGFAN BRAND SHOP</h3></div>
+      <div><h3>Product Categories</h3><p>Home Products / Electronic Products / Beauty Products / Other Products</p></div>
+      <div><h3>Customer Service</h3><p>Email: ANGFANBRAND163@163.COM</p></div>
+    </div>
+  </footer>
+
+  <style>
+    .breadcrumb a { color: inherit; text-decoration:none; }
+    .product-detail-loading { padding:50px 0;color:#64748b; }
+    .detail-layout {
+      display:grid;
+      grid-template-columns:minmax(280px, 480px) 1fr;
+      gap:34px;
+      align-items:start;
+      margin:36px 0 70px;
+    }
+    .detail-image-panel {
+      background:#fff;
+      border:1px solid #e6edf7;
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(15,23,42,.08);
+      padding:28px;
+    }
+    .detail-main-image-wrap {
+      height:360px;
+      background:linear-gradient(180deg,#f8fafc,#eef5ff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:14px;
+      overflow:hidden;
+    }
+    .detail-main-image {
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+      display:block;
+    }
+    .detail-info-panel {
+      background:#fff;
+      border:1px solid #e6edf7;
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(15,23,42,.08);
+      padding:28px;
+    }
+    .detail-category {
+      display:inline-block;
+      font-size:13px;
+      font-weight:800;
+      color:#2563eb;
+      background:#eff6ff;
+      border-radius:999px;
+      padding:6px 12px;
+      margin-bottom:12px;
+    }
+    .detail-title {
+      font-size:34px;
+      line-height:1.15;
+      color:#0f172a;
+      margin:8px 0 18px;
+      font-weight:900;
+    }
+    .detail-meta-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(160px,1fr));
+      gap:12px;
+      margin:22px 0;
+    }
+    .detail-meta {
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:12px;
+      padding:12px 14px;
+      color:#334155;
+      font-size:14px;
+    }
+    .detail-meta strong {
+      display:block;
+      color:#0f172a;
+      margin-bottom:4px;
+      font-size:13px;
+    }
+    .detail-description {
+      color:#334155;
+      font-size:16px;
+      line-height:1.7;
+      margin:20px 0;
+      white-space:pre-line;
+    }
+    .feature-list {
+      margin:20px 0 0;
+      padding:0;
+      list-style:none;
+    }
+    .feature-list li {
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:12px;
+      padding:12px 14px;
+      margin-bottom:10px;
+      color:#334155;
+      line-height:1.55;
+    }
+    .detail-buttons {
+      display:flex;
+      gap:12px;
+      margin-top:24px;
+      flex-wrap:wrap;
+    }
+    .detail-buttons a {
+      text-decoration:none;
+      padding:13px 18px;
+      border-radius:12px;
+      font-weight:800;
+      text-align:center;
+    }
+    .detail-primary {
+      background:#2563eb;
+      color:#fff;
+    }
+    .detail-secondary {
+      background:#f1f5f9;
+      color:#0f172a;
+    }
+    @media(max-width:850px){
+      .detail-layout { grid-template-columns:1fr; }
+      .detail-title { font-size:26px; }
+      .detail-meta-grid { grid-template-columns:1fr; }
+    }
+  </style>
+
+  <script>
+    const CSV_URL = "/products.csv?v=" + Date.now();
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let quote = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const n = text[i + 1];
+
+        if (c === '"' && quote && n === '"') {
+          cell += '"';
+          i++;
+        } else if (c === '"') {
+          quote = !quote;
+        } else if (c === "," && !quote) {
+          row.push(cell);
+          cell = "";
+        } else if ((c === "\n" || c === "\r") && !quote) {
+          if (cell || row.length) {
+            row.push(cell);
+            rows.push(row);
+            row = [];
+            cell = "";
+          }
+          if (c === "\r" && n === "\n") i++;
+        } else {
+          cell += c;
+        }
+      }
+
+      if (cell || row.length) rows.push([...row, cell]);
+
+      const headers = rows.shift().map(h => h.trim());
+      return rows.filter(r => r.length).map(r => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = (r[i] || "").trim());
+        return obj;
+      });
+    }
+
+    function safeText(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name) || "";
+    }
+
+    function splitFeatures(description) {
+      const text = String(description || "");
+      if (!text.includes("|")) return [];
+      return text.split("|").map(x => x.trim()).filter(Boolean);
+    }
+
+    function renderDetail(products) {
+      const box = document.getElementById("product-detail");
+      const slug = getParam("slug");
+      const asin = getParam("asin");
+      const id = getParam("id");
+
+      let product = null;
+      if (slug) product = products.find(p => (p.slug || "") === slug);
+      if (!product && asin) product = products.find(p => (p.asin || "").toLowerCase() === asin.toLowerCase());
+      if (!product && id) product = products.find(p => String(p.id || "") === String(id));
+      if (!product && products.length) product = products[0];
+
+      if (!product) {
+        box.innerHTML = `
+          <section class="page-hero">
+            <h1>Product Not Found</h1>
+            <p>The selected product could not be found. Please return to the product list.</p>
+            <p><a href="/products.html">Back to Products</a></p>
+          </section>
+        `;
+        return;
+      }
+
+      const title = product.title || "ANGFAN Product";
+      const image = product.main_image || "/main.svg";
+      const features = splitFeatures(product.description);
+      const desc = product.description || "Selected ANGFAN product for everyday use.";
+
+      document.title = title + " - ANGFAN BRAND SHOP";
+
+      box.innerHTML = `
+        <div class="detail-layout">
+          <div class="detail-image-panel">
+            <div class="detail-main-image-wrap">
+              <img class="detail-main-image" src="${safeText(image)}" alt="${safeText(title)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/main.svg';">
+            </div>
+          </div>
+
+          <div class="detail-info-panel">
+            <span class="detail-category">${safeText(product.category || "Products")}</span>
+            <h1 class="detail-title">${safeText(title)}</h1>
+
+            <div class="detail-meta-grid">
+              <div class="detail-meta"><strong>Brand</strong>${safeText(product.brand || "ANGFAN")}</div>
+              <div class="detail-meta"><strong>SKU</strong>${safeText(product.sku || "N/A")}</div>
+              <div class="detail-meta"><strong>ASIN</strong>${safeText(product.asin || "N/A")}</div>
+              <div class="detail-meta"><strong>First Release Time</strong>${safeText(product.first_release_time || "N/A")}</div>
+            </div>
+
+            ${features.length ? `
+              <ul class="feature-list">
+                ${features.map(f => `<li>${safeText(f)}</li>`).join("")}
+              </ul>
+            ` : `<p class="detail-description">${safeText(desc)}</p>`}
+
+            <div class="detail-buttons">
+              <a class="detail-primary" href="/contact.html">Contact Us</a>
+              <a class="detail-secondary" href="/products.html">Back to Products</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    fetch(CSV_URL)
+      .then(res => res.text())
+      .then(text => renderDetail(parseCSV(text)))
+      .catch(() => {
+        document.getElementById("product-detail").innerHTML = "<p>Product details are loading. Please refresh later.</p>";
+      });
+  </script>
 </body>
 </html>
