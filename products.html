@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Products - ANGFAN BRAND SHOP</title>
+  <meta name="description" content="Browse ANGFAN BRAND SHOP products, categories, SKU, ASIN, specifications and product details.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>Official Online Product Store</div>
+      <div>Customer Service: ANGFANBRAND163@163.COM</div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <span class="brand-word">ANGFAN</span>
+        <span class="shop-word">BRAND SHOP</span>
+        <span class="logo-badge">Official</span>
+      </a>
+
+      <form class="searchbar" action="/products.html">
+        <input name="q" placeholder="Search products, SKU, ASIN...">
+        <button>Search</button>
+      </form>
+
+      <div class="header-actions">
+        <a class="header-action" href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/">Home</a>
+      <a href="/products.html">All Products</a>
+      <a href="/products.html?category=Home%20Products">Home Products</a>
+      <a href="/products.html?category=Electronic%20Products">Electronic Products</a>
+      <a href="/products.html?category=Beauty%20Products">Beauty Products</a>
+      <a href="/products.html?category=Other%20Products">Other Products</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="breadcrumb">Home / Products</div>
+
+    <section class="page-hero">
+      <h1>Product List</h1>
+      <p>View all products and categories</p>
+    </section>
+
+    <div id="product-status" style="margin:20px 0;color:#64748b;">Loading products...</div>
+    <div id="angfan-product-grid" class="angfan-product-grid"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><h3>ANGFAN BRAND SHOP</h3></div>
+      <div><h3>Product Categories</h3><p>Home Products / Electronic Products / Beauty Products / Other Products</p></div>
+      <div><h3>Customer Service</h3><p>Email: ANGFANBRAND163@163.COM</p></div>
+    </div>
+  </footer>
+
+  <style>
+    .angfan-product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin: 36px 0 60px;
+    }
+
+    .angfan-product-card {
+      background: #fff;
+      border: 1px solid #e6edf7;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(15,23,42,.08);
+      overflow: hidden;
+      transition: .2s ease;
+    }
+
+    .angfan-product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(15,23,42,.14);
+    }
+
+    .angfan-product-image {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      background: #f8fafc;
+      padding: 18px;
+    }
+
+    .angfan-product-info {
+      padding: 18px;
+    }
+
+    .angfan-category {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+    }
+
+    .angfan-product-title {
+      font-size: 18px;
+      line-height: 1.35;
+      margin: 8px 0 10px;
+      color: #0f172a;
+      font-weight: 800;
+    }
+
+    .angfan-meta {
+      font-size: 13px;
+      color: #475569;
+      margin: 4px 0;
+    }
+
+    .angfan-description {
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.55;
+      margin-top: 12px;
+      min-height: 64px;
+    }
+
+    .angfan-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .angfan-buttons a {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .angfan-view {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .angfan-contact {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+  </style>
+
+  <script>
+    const CSV_URL = "/products.csv?v=" + Date.now();
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let quote = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const n = text[i + 1];
+
+        if (c === '"' && quote && n === '"') {
+          cell += '"';
+          i++;
+        } else if (c === '"') {
+          quote = !quote;
+        } else if (c === "," && !quote) {
+          row.push(cell);
+          cell = "";
+        } else if ((c === "\n" || c === "\r") && !quote) {
+          if (cell || row.length) {
+            row.push(cell);
+            rows.push(row);
+            row = [];
+            cell = "";
+          }
+          if (c === "\r" && n === "\n") i++;
+        } else {
+          cell += c;
+        }
+      }
+
+      if (cell || row.length) {
+        row.push(cell);
+        rows.push(row);
+      }
+
+      const headers = rows.shift().map(h => h.trim());
+      return rows.filter(r => r.length).map(r => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = (r[i] || "").trim());
+        return obj;
+      });
+    }
+
+    function safeText(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name) || "";
+    }
+
+    function renderProducts(products) {
+      const grid = document.getElementById("angfan-product-grid");
+      const status = document.getElementById("product-status");
+
+      const q = getParam("q").toLowerCase();
+      const category = getParam("category");
+
+      let list = products.filter(p => !p.status || p.status.toLowerCase() === "published");
+
+      if (category) {
+        list = list.filter(p => (p.category || "") === category);
+      }
+
+      if (q) {
+        list = list.filter(p =>
+          (p.title || "").toLowerCase().includes(q) ||
+          (p.sku || "").toLowerCase().includes(q) ||
+          (p.asin || "").toLowerCase().includes(q)
+        );
+      }
+
+      if (!list.length) {
+        status.textContent = "No products found.";
+        grid.innerHTML = "";
+        return;
+      }
+
+      status.textContent = list.length + " products found.";
+
+      grid.innerHTML = list.map(p => {
+        const image = p.main_image || "/main.svg";
+        const title = p.title || "ANGFAN Product";
+        const asin = p.asin || "N/A";
+        const sku = p.sku || "N/A";
+        const category = p.category || "Products";
+        const slug = p.slug || asin;
+        const description = p.description || "Selected ANGFAN product for everyday use.";
+
+        return `
+          <div class="angfan-product-card">
+            <img class="angfan-product-image" src="${safeText(image)}" alt="${safeText(title)}">
+            <div class="angfan-product-info">
+              <span class="angfan-category">${safeText(category)}</span>
+              <h3 class="angfan-product-title">${safeText(title)}</h3>
+              <p class="angfan-meta"><strong>SKU:</strong> ${safeText(sku)}</p>
+              <p class="angfan-meta"><strong>ASIN:</strong> ${safeText(asin)}</p>
+              <p class="angfan-description">${safeText(description)}</p>
+              <div class="angfan-buttons">
+                <a class="angfan-view" href="/product.html?slug=${encodeURIComponent(slug)}">View Details</a>
+                <a class="angfan-contact" href="/contact.html">Contact Us</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    fetch(CSV_URL)
+      .then(res => res.text())
+      .then(text => renderProducts(parseCSV(text)))
+      .catch(() => {
+        document.getElementById("product-status").textContent = "Products are loading. Please refresh later.";
+      });
+  </script>
+</body>
+</html>
