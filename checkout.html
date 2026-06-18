@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout - ANGFAN Brand Shop</title>
+<meta name="description" content="ANGFAN Brand Shop">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <span>Official Product Store</span>
+    <span>Customer Service: ANGFANBRAND163@163.COM</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="/"><span>ANGFAN</span><b>Brand Shop</b></a>
+    <form class="searchbar" action="/products.html">
+      <input name="q" placeholder="Search products, SKU, ASIN">
+      <button type="submit">Search</button>
+    </form>
+    <div class="quick-actions">
+      <a href="/cart.html">Cart</a>
+      <a href="/checkout.html">Checkout</a>
+      <a href="/wishlist.html">Wishlist</a>
+      <a href="/compare.html">Compare</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a href="/" class="active">Home</a>
+    <a href="/products.html" class="">Products</a>
+    <a href="/products.html?category=Home%20Products" class="">Home Products</a>
+    <a href="/products.html?category=Electronic%20Products" class="">Electronic Products</a>
+    <a href="/products.html?category=Beauty%20Products" class="">Beauty Products</a>
+    <a href="/products.html?category=Other%20Products" class="">Other Products</a>
+    <a href="/contact.html" class="">Contact</a>
+  </div>
+</nav>
+
+
+
+<main class="container">
+  <div class="breadcrumb">Home / Checkout</div>
+  <section class="checkout-layout">
+    <div class="checkout-card">
+      <h1>Checkout</h1>
+
+      <div class="checkout-section">
+        <h2>Contact Information</h2>
+        <div class="form-grid">
+          <label>Full Name<input id="checkoutName" placeholder="Full name"></label>
+          <label>Email<input id="checkoutEmail" placeholder="email@example.com"></label>
+          <label>Phone<input id="checkoutPhone" placeholder="Phone number"></label>
+        </div>
+      </div>
+
+      <div class="checkout-section">
+        <h2>Shipping Address</h2>
+        <div class="form-grid">
+          <label>Address<input id="checkoutAddress" placeholder="Street address"></label>
+          <label>City<input id="checkoutCity" placeholder="City"></label>
+          <label>State<input id="checkoutState" placeholder="State"></label>
+          <label>ZIP Code<input id="checkoutZip" placeholder="ZIP code"></label>
+          <label>Country<input id="checkoutCountry" value="United States"></label>
+        </div>
+      </div>
+
+      <div class="checkout-section">
+        <h2>Payment Method</h2>
+        <div class="payment-methods">
+          <label><input type="radio" name="payMethod" value="Credit Card" checked> Credit Card</label>
+          <label><input type="radio" name="payMethod" value="PayPal"> PayPal</label>
+          <label><input type="radio" name="payMethod" value="Invoice"> Invoice / Manual Payment</label>
+        </div>
+        <div class="form-grid card-fields">
+          <label>Card Number<input id="cardNumber" placeholder="Card number"></label>
+          <label>Expiration<input id="cardExp" placeholder="MM / YY"></label>
+          <label>CVV<input id="cardCvv" placeholder="CVV"></label>
+          <label>Name on Card<input id="cardName" placeholder="Name on card"></label>
+        </div>
+        <p class="checkout-note">This static checkout page is for order collection and storefront presentation. To accept real card payments, connect Stripe, PayPal, or a payment link.</p>
+      </div>
+
+      <div class="checkout-actions">
+        <button class="checkout-submit" type="button" onclick="placeDemoOrder()">Place Order</button>
+        <a class="checkout-secondary" href="/cart.html">Back to Cart</a>
+      </div>
+
+      <div id="order-message"></div>
+    </div>
+
+    <aside class="order-summary">
+      <h2>Order Summary</h2>
+      <div id="checkout-summary"></div>
+    </aside>
+  </section>
+</main>
+
+
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><h3>ANGFAN Brand Shop</h3></div>
+    <div><h3>Categories</h3><p>Home / Electronic / Beauty / Other</p></div>
+    <div><h3>Service</h3><p>ANGFANBRAND163@163.COM</p></div>
+  </div>
+</footer>
+<script src="/app.js"></script>
+</body>
+</html>

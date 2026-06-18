@@ -26,3 +26,22 @@ ANGFAN Brand Shop 最终整合包
 - Commit changes
 - 等 Cloudflare 自动部署
 - 浏览器按 Ctrl + F5 强制刷新
+
+
+## 本次新增：付款 / Checkout 页面
+
+已新增 checkout.html：
+- Cart 页面增加 Proceed to Checkout
+- Checkout 页面包含联系信息、收货地址、支付方式、订单汇总
+- Place Order 可点击并生成订单参考号
+- 当前为静态展示/订单收集页面，不会真实扣款
+- 如需真实收款，需要接入 Stripe / PayPal / Shopify / OpenCart 支付插件
+
+
+## 本次新增：主页高级视觉优化
+
+- 重新设计首页 Hero 区域，加入左右布局和产品视觉卡片
+- 增加三张促销/入口卡片，提高页面层次
+- Shop by Category 改为更高级的彩色卡片布局
+- 增加深色品牌横幅区，整体更接近美国大品牌购物网站
+- 保留 Checkout、Cart、Wishlist、Compare 等功能
