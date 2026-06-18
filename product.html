@@ -25,7 +25,7 @@
       </a>
 
       <form class="searchbar" action="/products.html">
-        <input name="q" placeholder="Search products, SKU, ASIN...">
+        <input name="q" placeholder="Search products, SKU...">
         <button>Search</button>
       </form>
 
@@ -63,6 +63,7 @@
   <style>
     .breadcrumb a { color: inherit; text-decoration:none; }
     .product-detail-loading { padding:50px 0;color:#64748b; }
+
     .detail-layout {
       display:grid;
       grid-template-columns:minmax(280px, 480px) 1fr;
@@ -70,13 +71,16 @@
       align-items:start;
       margin:36px 0 70px;
     }
-    .detail-image-panel {
+
+    .detail-image-panel,
+    .detail-info-panel {
       background:#fff;
       border:1px solid #e6edf7;
       border-radius:18px;
       box-shadow:0 10px 30px rgba(15,23,42,.08);
       padding:28px;
     }
+
     .detail-main-image-wrap {
       height:360px;
       background:linear-gradient(180deg,#f8fafc,#eef5ff);
@@ -86,19 +90,44 @@
       border-radius:14px;
       overflow:hidden;
     }
+
     .detail-main-image {
       max-width:100%;
       max-height:100%;
       object-fit:contain;
       display:block;
     }
-    .detail-info-panel {
-      background:#fff;
-      border:1px solid #e6edf7;
-      border-radius:18px;
-      box-shadow:0 10px 30px rgba(15,23,42,.08);
-      padding:28px;
+
+    .thumb-row {
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:10px;
+      margin-top:14px;
     }
+
+    .thumb-button {
+      border:2px solid #e2e8f0;
+      border-radius:10px;
+      background:#f8fafc;
+      height:72px;
+      padding:5px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .thumb-button.active {
+      border-color:#2563eb;
+      background:#eff6ff;
+    }
+
+    .thumb-button img {
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+    }
+
     .detail-category {
       display:inline-block;
       font-size:13px;
@@ -109,6 +138,7 @@
       padding:6px 12px;
       margin-bottom:12px;
     }
+
     .detail-title {
       font-size:34px;
       line-height:1.15;
@@ -116,38 +146,28 @@
       margin:8px 0 18px;
       font-weight:900;
     }
-    .detail-meta-grid {
-      display:grid;
-      grid-template-columns:repeat(2,minmax(160px,1fr));
-      gap:12px;
-      margin:22px 0;
-    }
-    .detail-meta {
+
+    .detail-sku {
       background:#f8fafc;
       border:1px solid #e2e8f0;
       border-radius:12px;
-      padding:12px 14px;
+      padding:14px 16px;
       color:#334155;
-      font-size:14px;
-    }
-    .detail-meta strong {
-      display:block;
-      color:#0f172a;
-      margin-bottom:4px;
-      font-size:13px;
-    }
-    .detail-description {
-      color:#334155;
-      font-size:16px;
-      line-height:1.7;
+      font-size:15px;
       margin:20px 0;
-      white-space:pre-line;
     }
+
+    .detail-sku strong {
+      color:#0f172a;
+      margin-right:8px;
+    }
+
     .feature-list {
       margin:20px 0 0;
       padding:0;
       list-style:none;
     }
+
     .feature-list li {
       background:#f8fafc;
       border:1px solid #e2e8f0;
@@ -157,12 +177,22 @@
       color:#334155;
       line-height:1.55;
     }
+
+    .detail-description {
+      color:#334155;
+      font-size:16px;
+      line-height:1.7;
+      margin:20px 0;
+      white-space:pre-line;
+    }
+
     .detail-buttons {
       display:flex;
       gap:12px;
       margin-top:24px;
       flex-wrap:wrap;
     }
+
     .detail-buttons a {
       text-decoration:none;
       padding:13px 18px;
@@ -170,18 +200,14 @@
       font-weight:800;
       text-align:center;
     }
-    .detail-primary {
-      background:#2563eb;
-      color:#fff;
-    }
-    .detail-secondary {
-      background:#f1f5f9;
-      color:#0f172a;
-    }
+
+    .detail-primary { background:#2563eb; color:#fff; }
+    .detail-secondary { background:#f1f5f9; color:#0f172a; }
+
     @media(max-width:850px){
       .detail-layout { grid-template-columns:1fr; }
       .detail-title { font-size:26px; }
-      .detail-meta-grid { grid-template-columns:1fr; }
+      .thumb-row { grid-template-columns:repeat(4,1fr); }
     }
   </style>
 
@@ -241,21 +267,36 @@
       return new URLSearchParams(window.location.search).get(name) || "";
     }
 
+    function getImages(product) {
+      const gallery = String(product.gallery_images || "")
+        .split("|")
+        .map(x => x.trim())
+        .filter(Boolean);
+      const main = String(product.main_image || "").trim();
+      const images = [];
+      if (main) images.push(main);
+      gallery.forEach(img => {
+        if (!images.includes(img)) images.push(img);
+      });
+      return images.length ? images : ["/main.svg"];
+    }
+
     function splitFeatures(description) {
-      const text = String(description || "");
-      if (!text.includes("|")) return [];
-      return text.split("|").map(x => x.trim()).filter(Boolean);
+      return String(description || "")
+        .split("|")
+        .map(x => x.trim())
+        .filter(Boolean);
     }
 
     function renderDetail(products) {
       const box = document.getElementById("product-detail");
       const slug = getParam("slug");
-      const asin = getParam("asin");
+      const sku = getParam("sku");
       const id = getParam("id");
 
       let product = null;
       if (slug) product = products.find(p => (p.slug || "") === slug);
-      if (!product && asin) product = products.find(p => (p.asin || "").toLowerCase() === asin.toLowerCase());
+      if (!product && sku) product = products.find(p => (p.sku || "").toLowerCase() === sku.toLowerCase());
       if (!product && id) product = products.find(p => String(p.id || "") === String(id));
       if (!product && products.length) product = products[0];
 
@@ -271,7 +312,8 @@
       }
 
       const title = product.title || "ANGFAN Product";
-      const image = product.main_image || "/main.svg";
+      const skuText = product.sku || "N/A";
+      const images = getImages(product);
       const features = splitFeatures(product.description);
       const desc = product.description || "Selected ANGFAN product for everyday use.";
 
@@ -281,7 +323,15 @@
         <div class="detail-layout">
           <div class="detail-image-panel">
             <div class="detail-main-image-wrap">
-              <img class="detail-main-image" src="${safeText(image)}" alt="${safeText(title)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/main.svg';">
+              <img id="detail-main-image" class="detail-main-image" src="${safeText(images[0])}" alt="${safeText(title)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/main.svg';">
+            </div>
+
+            <div class="thumb-row">
+              ${images.slice(0, 10).map((img, index) => `
+                <button type="button" class="thumb-button ${index === 0 ? "active" : ""}" data-img="${safeText(img)}">
+                  <img src="${safeText(img)}" alt="${safeText(title)} image ${index + 1}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/main.svg';">
+                </button>
+              `).join("")}
             </div>
           </div>
 
@@ -289,12 +339,7 @@
             <span class="detail-category">${safeText(product.category || "Products")}</span>
             <h1 class="detail-title">${safeText(title)}</h1>
 
-            <div class="detail-meta-grid">
-              <div class="detail-meta"><strong>Brand</strong>${safeText(product.brand || "ANGFAN")}</div>
-              <div class="detail-meta"><strong>SKU</strong>${safeText(product.sku || "N/A")}</div>
-              <div class="detail-meta"><strong>ASIN</strong>${safeText(product.asin || "N/A")}</div>
-              <div class="detail-meta"><strong>First Release Time</strong>${safeText(product.first_release_time || "N/A")}</div>
-            </div>
+            <div class="detail-sku"><strong>SKU:</strong>${safeText(skuText)}</div>
 
             ${features.length ? `
               <ul class="feature-list">
@@ -309,6 +354,14 @@
           </div>
         </div>
       `;
+
+      document.querySelectorAll(".thumb-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".thumb-button").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById("detail-main-image").src = btn.getAttribute("data-img");
+        });
+      });
     }
 
     fetch(CSV_URL)

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Products - ANGFAN BRAND SHOP</title>
-  <meta name="description" content="Browse ANGFAN BRAND SHOP products, categories, SKU, ASIN, specifications and product details.">
+  <meta name="description" content="Browse ANGFAN BRAND SHOP products, categories, SKU, specifications and product details.">
   <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -25,7 +25,7 @@
       </a>
 
       <form class="searchbar" action="/products.html">
-        <input name="q" placeholder="Search products, SKU, ASIN...">
+        <input name="q" placeholder="Search products, SKU...">
         <button>Search</button>
       </form>
 
@@ -205,6 +205,28 @@
       return new URLSearchParams(window.location.search).get(name) || "";
     }
 
+    function getImages(product) {
+      const gallery = String(product.gallery_images || "")
+        .split("|")
+        .map(x => x.trim())
+        .filter(Boolean);
+      const main = String(product.main_image || "").trim();
+      const images = [];
+      if (main) images.push(main);
+      gallery.forEach(img => {
+        if (!images.includes(img)) images.push(img);
+      });
+      return images.length ? images : ["/main.svg"];
+    }
+
+    function firstFeature(description) {
+      const parts = String(description || "")
+        .split("|")
+        .map(x => x.trim())
+        .filter(Boolean);
+      return parts.slice(0, 2).join(" ");
+    }
+
     function renderProducts(products) {
       const grid = document.getElementById("angfan-product-grid");
       const status = document.getElementById("product-status");
@@ -219,8 +241,7 @@
       if (q) {
         list = list.filter(p =>
           (p.title || "").toLowerCase().includes(q) ||
-          (p.sku || "").toLowerCase().includes(q) ||
-          (p.asin || "").toLowerCase().includes(q)
+          (p.sku || "").toLowerCase().includes(q)
         );
       }
 
@@ -233,13 +254,13 @@
       status.textContent = list.length + " products found.";
 
       grid.innerHTML = list.map(p => {
-        const image = p.main_image || "/main.svg";
+        const images = getImages(p);
+        const image = images[0];
         const title = p.title || "ANGFAN Product";
-        const asin = p.asin || "N/A";
         const sku = p.sku || "N/A";
         const category = p.category || "Products";
-        const slug = p.slug || asin;
-        const description = p.description || "Selected ANGFAN product for everyday use.";
+        const slug = p.slug || sku;
+        const description = firstFeature(p.description) || "Selected ANGFAN product for everyday use.";
 
         return `
           <div class="angfan-product-card">
@@ -250,7 +271,6 @@
               <span class="angfan-category">${safeText(category)}</span>
               <h3 class="angfan-product-title">${safeText(title)}</h3>
               <p class="angfan-meta"><strong>SKU:</strong> ${safeText(sku)}</p>
-              <p class="angfan-meta"><strong>ASIN:</strong> ${safeText(asin)}</p>
               <p class="angfan-description">${safeText(description)}</p>
               <div class="angfan-buttons">
                 <a class="angfan-view" href="/product.html?slug=${encodeURIComponent(slug)}">View Details</a>
