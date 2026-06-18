@@ -1,113 +1,164 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Checkout - ANGFAN Brand Shop</title>
-<meta name="description" content="ANGFAN Brand Shop">
-<link rel="stylesheet" href="/style.css">
-</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout - ANGFAN Brand Shop</title><link rel="stylesheet" href="/style.css"><style>
+:root{
+  --nav:#0d1324;--nav2:#142756;--green:#63b72f;--text:#111827;--muted:#5f6b7a;
+  --line:#e6eaf2;--soft:#f6f8fb;--blue:#2563eb;--gold:#f5b942;--cream:#fff7e6;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:#fff;font-size:15px;letter-spacing:-.01em}
+a{text-decoration:none;color:inherit}
+.topbar{background:#edf7ff;border-bottom:1px solid #d9e8f8;color:#173a67;font-size:13px}
+.topbar-inner,.header-inner,.nav-inner,.container,.footer-inner{max-width:1280px;margin:0 auto}
+.topbar-inner{padding:8px 20px;display:flex;justify-content:space-between;gap:20px}
+.site-header{background:#fff}
+.header-inner{padding:22px 20px;display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center}
+.logo{font-size:28px;font-weight:800;letter-spacing:.2px;display:flex;gap:9px;white-space:nowrap;align-items:center}
+.logo span{color:#0b1a38}.logo b{font-weight:800;color:var(--green);letter-spacing:.04em}
+.searchbar{display:flex;justify-self:center;width:100%;max-width:610px;border:1px solid #d9e3f4;border-radius:999px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(15,23,42,.04)}
+.searchbar input{flex:1;border:0;padding:14px 18px;font-size:15px;outline:none}
+.searchbar button{border:0;background:#2563eb;color:#fff;font-weight:700;padding:0 28px;cursor:pointer}
+.quick-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.quick-actions a{border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-weight:650;box-shadow:0 4px 12px rgba(15,23,42,.04)}
+.main-nav{background:linear-gradient(90deg,var(--nav),var(--nav2));color:#fff}
+.nav-inner{display:flex;overflow:auto;padding:0 20px}
+.nav-inner a{padding:17px 24px;border-right:1px solid rgba(255,255,255,.08);font-weight:750;white-space:nowrap}
+.nav-inner a:hover,.nav-inner a.active{background:rgba(255,255,255,.09)}
+.container{max-width:1280px;margin:0 auto;padding:28px 20px}
+.breadcrumb{font-size:13px;color:#64748b;margin-bottom:18px}
+
+/* Home */
+.home-page{max-width:1280px;margin:0 auto;padding:28px 20px 0}
+.home-hero-premium{
+  position:relative;overflow:hidden;min-height:430px;border:1px solid var(--line);
+  border-radius:28px;padding:58px;display:grid;grid-template-columns:1.02fr .98fr;gap:36px;align-items:center;
+  background:radial-gradient(circle at 86% 18%,rgba(99,183,47,.24) 0,rgba(99,183,47,.24) 12%,transparent 13%),
+             radial-gradient(circle at 66% 88%,rgba(37,99,235,.18) 0,rgba(37,99,235,.18) 18%,transparent 19%),
+             linear-gradient(135deg,#f3f7ff 0%,#fff 55%,#fff7e8 100%);
+  box-shadow:0 22px 55px rgba(15,23,42,.08);
+}
+.home-hero-premium:before{content:"";position:absolute;right:-90px;top:-120px;width:360px;height:360px;border-radius:999px;background:linear-gradient(135deg,rgba(37,99,235,.14),rgba(99,183,47,.12))}
+.hero-left{position:relative;z-index:2}
+.hero-kicker{display:inline-flex;border:1px solid #d8e7ff;background:#fff;border-radius:999px;padding:9px 14px;color:#1d4ed8;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.hero-left h1{font-size:62px;line-height:.98;margin:20px 0 16px;font-weight:820;letter-spacing:-.055em;color:#0e172b}
+.hero-left p{font-size:18px;line-height:1.65;color:#516174;max-width:570px;margin:0}
+.hero-actions{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 23px;font-weight:800}
+.hero-btn.primary{background:#111827;color:#fff;box-shadow:0 12px 26px rgba(17,24,39,.16)}
+.hero-btn.secondary{background:#fff;color:#173a67;border:1px solid #cbd5e1}
+.hero-btn.white{background:#fff;color:#0f172a}
+.hero-mini-stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.hero-mini-stats span{background:rgba(255,255,255,.78);border:1px solid #e3e8f2;border-radius:16px;padding:12px 14px;color:#5d6b7f}
+.hero-mini-stats b{display:block;color:#111827;font-size:20px}
+.hero-right{position:relative;min-height:330px;z-index:2}
+.hero-product{position:absolute;background:#fff;border:1px solid #e3e8f2;border-radius:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 18px 42px rgba(15,23,42,.12);overflow:hidden}
+.hero-product img{max-width:90%;max-height:90%;object-fit:contain}
+.hero-product-main{right:70px;top:14px;width:285px;height:285px}
+.hero-product-small{width:132px;height:132px}
+.hero-product-small.one{left:12px;top:42px}.hero-product-small.two{left:88px;bottom:8px}.hero-product-small.three{right:4px;bottom:28px}
+.home-promo-row{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:18px;margin:24px 0 38px}
+.promo-card{min-height:132px;border-radius:22px;padding:24px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;box-shadow:0 14px 34px rgba(15,23,42,.10)}
+.promo-card:after{content:"";position:absolute;right:-45px;top:-45px;width:150px;height:150px;border-radius:999px;background:rgba(255,255,255,.14)}
+.promo-card span{font-size:13px;text-transform:uppercase;letter-spacing:.12em;opacity:.85;font-weight:800;position:relative;z-index:1}
+.promo-card b{font-size:25px;margin-top:5px;position:relative;z-index:1}
+.promo-dark{background:linear-gradient(135deg,#111827,#263c69)}.promo-blue{background:linear-gradient(135deg,#1d4ed8,#0ea5e9)}.promo-green{background:linear-gradient(135deg,#2f7d1f,#76b82a)}
+.home-section{margin:36px 0}.home-section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:18px}
+.home-section-head span{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#2563eb;font-weight:850}
+.home-section-head h2{font-size:34px;line-height:1;margin:5px 0 0;letter-spacing:-.04em}
+.home-section-head a{color:#2563eb;font-weight:800}
+.premium-category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.premium-category{min-height:170px;border:1px solid #e4e9f2;border-radius:24px;background:#fff;padding:24px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 12px 30px rgba(15,23,42,.07);transition:.16s}
+.premium-category:hover{transform:translateY(-3px);box-shadow:0 22px 42px rgba(15,23,42,.12)}
+.premium-category:before{content:"";position:absolute;right:-36px;top:-36px;width:132px;height:132px;border-radius:999px;opacity:.9}
+.premium-category .cat-icon{position:absolute;right:22px;top:22px;width:52px;height:52px;border-radius:18px;background:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900}
+.premium-category strong{font-size:20px;position:relative;z-index:1}.premium-category em{font-style:normal;color:#607086;font-size:14px;margin-top:6px;position:relative;z-index:1}
+.home-cat:before{background:#dcfce7}.electronic-cat:before{background:#dbeafe}.beauty-cat:before{background:#fce7f3}.other-cat:before{background:#ffedd5}
+.home-banner-split{border-radius:26px;background:linear-gradient(90deg,#0f172a,#173d83 70%,#2563eb);color:#fff;padding:34px 38px;display:flex;align-items:center;justify-content:space-between;gap:22px;box-shadow:0 18px 44px rgba(15,23,42,.13)}
+.home-banner-split span{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:850;color:#bde7ff}
+.home-banner-split h2{font-size:32px;margin:6px 0 0;letter-spacing:-.035em}
+
+/* Product cards */
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.product-card{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(15,23,42,.055);transition:.16s}
+.product-card:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(15,23,42,.12)}
+.card-img{height:255px;display:flex;align-items:center;justify-content:center;padding:16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#f8fbff)}
+.card-img img{max-width:100%;max-height:100%;object-fit:contain}
+.card-body{padding:15px}.card-body h3{font-size:15px;line-height:1.35;min-height:60px;margin:0 0 10px;font-weight:700}
+.card-meta{font-size:12px;color:#64748b}.card-price{font-size:20px;font-weight:800;margin-top:8px}
+
+/* Cart */
+.cart-shell{border:1px solid var(--line);border-radius:22px;background:#fff;padding:30px;box-shadow:0 18px 42px rgba(15,23,42,.07)}
+.cart-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:20px}
+.cart-head h1{font-size:34px;margin:0;letter-spacing:-.035em}
+.checkout-top-btn,.checkout-submit{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;background:#111827;color:#fff;font-weight:800;padding:13px 24px;text-decoration:none;cursor:pointer}
+.cart-list{border-top:1px solid var(--line)}
+.cart-row{display:grid;grid-template-columns:90px 1fr auto auto auto;gap:18px;align-items:center;border-bottom:1px solid var(--line);padding:18px 0}
+.cart-row img{width:90px;height:90px;object-fit:contain;border:1px solid var(--line);border-radius:12px;background:#fff}
+.cart-info b{display:block;font-size:16px}.cart-info span{display:block;color:#64748b;margin-top:4px}.cart-info em{display:block;font-style:normal;font-weight:800;margin-top:7px}
+.cart-qty{font-weight:700;color:#334155}.view-link{color:#2563eb;font-weight:700}.remove-btn{width:48px;height:48px;border:1px solid #1f2937;background:#fff;border-radius:8px;font-size:24px;cursor:pointer}
+.cart-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:22px}.continue-shopping{font-weight:800;color:#2563eb}
+.empty-box{border:1px dashed #cbd5e1;border-radius:14px;background:#f8fafc;color:#64748b;padding:22px}
+
+/* Amazon-like checkout */
+.checkout-page{max-width:1280px;margin:0 auto;padding:28px 20px}
+.checkout-title{font-size:36px;letter-spacing:-.035em;margin:0 0 18px}
+.amazon-checkout-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:26px;align-items:start}
+.checkout-main{display:flex;flex-direction:column;gap:16px}
+.amazon-step{border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.055);display:grid;grid-template-columns:58px 1fr;padding:22px}
+.step-number{width:34px;height:34px;border-radius:999px;background:#f59e0b;color:#111827;display:flex;align-items:center;justify-content:center;font-weight:900}
+.step-body h2{font-size:22px;margin:0 0 16px;letter-spacing:-.02em}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.form-grid label{font-size:13px;font-weight:700;color:#243047}
+.form-grid input{display:block;width:100%;height:44px;margin-top:7px;border:1px solid #cbd5e1;border-radius:8px;padding:0 12px;font-size:15px;background:#fff}
+.payment-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.payment-card{border:1px solid #cbd5e1;border-radius:12px;padding:13px;background:#f8fafc;font-weight:700}
+.checkout-note{font-size:13px;color:#64748b;line-height:1.55;margin-bottom:0}
+.checkout-item{display:grid;grid-template-columns:70px 1fr auto;gap:14px;align-items:center;border-top:1px solid var(--line);padding:14px 0}
+.checkout-item:first-child{border-top:0}
+.checkout-item img{width:70px;height:70px;object-fit:contain;border:1px solid var(--line);border-radius:10px;background:#fff}
+.checkout-item b{display:block}.checkout-item span,.checkout-item em{display:block;color:#64748b;font-style:normal;font-size:13px;margin-top:3px}
+.order-summary-card{position:sticky;top:16px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px;box-shadow:0 12px 32px rgba(15,23,42,.08)}
+.place-order-main{width:100%;border:0;border-radius:999px;background:#ffd814;color:#111827;font-weight:900;padding:13px 18px;cursor:pointer;box-shadow:0 4px 10px rgba(245,158,11,.18)}
+.secure-note{font-size:12px;color:#64748b;text-align:center;margin:10px 0 16px}
+.summary-lines p{display:flex;justify-content:space-between;margin:10px 0;color:#475569}
+.summary-total{border-top:1px solid var(--line);padding-top:14px;font-size:20px;color:#b12704!important;font-weight:900}
+.order-success,.order-error{margin-top:16px;border-radius:12px;padding:14px}.order-success{background:#ecfdf5;border:1px solid #bbf7d0;color:#14532d}.order-error{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239}
+.plain-card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:24px;box-shadow:0 8px 22px rgba(15,23,42,.06)}
+.table-list{width:100%;border-collapse:collapse}.table-list td{border-bottom:1px solid var(--line);padding:12px}.table-list img{width:72px;height:72px;object-fit:contain}
+.square-btn{height:56px;width:56px;border:1px solid #1f2937;background:#fff;border-radius:8px;font-size:24px;cursor:pointer}
+.toast{position:fixed;right:18px;top:18px;background:#111827;color:#fff;padding:12px 16px;border-radius:6px;z-index:999}
+
+/* Footer */
+.footer{margin-top:44px;background:linear-gradient(90deg,var(--nav),var(--nav2));color:#fff}
+.footer-inner{padding:32px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.footer h3{margin:0 0 10px}.footer p{margin:0;color:#dbeafe}
+
+/* Product detail compatibility */
+.reference-detail{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:34px;align-items:start}
+.main-photo{border:1px solid var(--line);min-height:540px;background:#fff;display:flex;align-items:center;justify-content:center;padding:16px}
+.main-photo img{max-width:100%;max-height:510px;object-fit:contain}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.thumb{border:1px solid var(--line);background:#fff;padding:5px;cursor:pointer;height:132px}.thumb img{width:100%;height:100%;object-fit:contain}.thumb.active,.thumb:hover{border-color:#9aa8bd}
+.right-info h1{font-size:28px;line-height:1.25;margin:0 0 14px}.info-lines{font-size:15px;line-height:1.9;margin-bottom:22px}.info-lines span{color:#68a91f;font-weight:800}
+.short-desc{font-size:16px;line-height:1.7;color:#3f4c62}.qty-line{display:flex;align-items:center;gap:18px;margin:22px 0}.qty-box{display:flex;border:1px solid var(--line)}.qty-box button,.qty-box input{height:46px;border:0;background:#fff;text-align:center}.qty-box button{width:42px;font-size:20px;cursor:pointer}.qty-box input{width:76px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.action-line{display:flex;gap:12px;margin-bottom:34px}.add-cart{height:56px;background:#050b18;color:#fff;border:0;border-radius:3px;font-size:17px;font-weight:700;padding:0 24px;cursor:pointer}.available-options{border-top:1px solid var(--line);padding-top:22px}.available-options h2{font-size:26px;margin:0 0 14px}.available-options input{height:44px;width:100%;border:1px solid #ccd3df;border-radius:4px;padding:0 12px}.detail-tabs{margin-top:32px;border:1px solid var(--line);border-radius:8px;padding:22px;background:#fff}
+@media(max-width:1000px){
+  .header-inner{grid-template-columns:1fr}.searchbar{max-width:100%}
+  .home-hero-premium{grid-template-columns:1fr;padding:42px}.hero-right{min-height:290px}
+  .home-promo-row,.premium-category-grid,.product-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-left h1{font-size:48px}.amazon-checkout-layout,.reference-detail{grid-template-columns:1fr}.order-summary-card{position:static}
+}
+@media(max-width:640px){
+  .home-page,.container,.checkout-page{padding:20px 14px}
+  .home-hero-premium{padding:30px;border-radius:20px}.hero-left h1{font-size:38px}.hero-right{display:none}
+  .home-promo-row,.premium-category-grid,.product-grid,.form-grid,.payment-options{grid-template-columns:1fr}
+  .cart-row{grid-template-columns:70px 1fr}.view-link,.cart-qty,.remove-btn{grid-column:2}.footer-inner{grid-template-columns:1fr}
+}
+</style></head>
 <body>
-<div class="topbar">
-  <div class="topbar-inner">
-    <span>Official Product Store</span>
-    <span>Customer Service: ANGFANBRAND163@163.COM</span>
-  </div>
-</div>
-<header class="site-header">
-  <div class="header-inner">
-    <a class="logo" href="/"><span>ANGFAN</span><b>Brand Shop</b></a>
-    <form class="searchbar" action="/products.html">
-      <input name="q" placeholder="Search products, SKU, ASIN">
-      <button type="submit">Search</button>
-    </form>
-    <div class="quick-actions">
-      <a href="/cart.html">Cart</a>
-      <a href="/checkout.html">Checkout</a>
-      <a href="/wishlist.html">Wishlist</a>
-      <a href="/compare.html">Compare</a>
-      <a href="/contact.html">Contact</a>
-    </div>
-  </div>
-</header>
-<nav class="main-nav">
-  <div class="nav-inner">
-    <a href="/" class="">Home</a>
-    <a href="/products.html" class="">Products</a>
-    <a href="/products.html?category=Home%20Products" class="">Home Products</a>
-    <a href="/products.html?category=Electronic%20Products" class="">Electronic Products</a>
-    <a href="/products.html?category=Beauty%20Products" class="">Beauty Products</a>
-    <a href="/products.html?category=Other%20Products" class="">Other Products</a>
-    <a href="/contact.html" class="">Contact</a>
-  </div>
-</nav>
-
-<main class="checkout-page">
-  <div class="breadcrumb">Home / Checkout</div>
-  <h1 class="checkout-title">Checkout</h1>
-  <section class="amazon-checkout-layout">
-    <div class="checkout-main">
-      <div class="amazon-step">
-        <div class="step-number">1</div>
-        <div class="step-body">
-          <h2>Shipping address</h2>
-          <div class="form-grid">
-            <label>Full Name<input id="checkoutName" placeholder="Full name"></label>
-            <label>Email<input id="checkoutEmail" placeholder="email@example.com"></label>
-            <label>Phone<input id="checkoutPhone" placeholder="Phone number"></label>
-            <label>Address<input id="checkoutAddress" placeholder="Street address"></label>
-            <label>City<input id="checkoutCity" placeholder="City"></label>
-            <label>State<input id="checkoutState" placeholder="State"></label>
-            <label>ZIP Code<input id="checkoutZip" placeholder="ZIP code"></label>
-            <label>Country<input id="checkoutCountry" value="United States"></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="amazon-step">
-        <div class="step-number">2</div>
-        <div class="step-body">
-          <h2>Payment method</h2>
-          <div class="payment-options">
-            <label class="payment-card"><input type="radio" name="payMethod" checked> Credit or Debit Card</label>
-            <label class="payment-card"><input type="radio" name="payMethod"> PayPal</label>
-            <label class="payment-card"><input type="radio" name="payMethod"> Invoice / Manual Payment</label>
-          </div>
-          <div class="form-grid card-fields">
-            <label>Card Number<input id="cardNumber" placeholder="Card number"></label>
-            <label>Name on Card<input id="cardName" placeholder="Name on card"></label>
-            <label>Expiration<input id="cardExp" placeholder="MM / YY"></label>
-            <label>CVV<input id="cardCvv" placeholder="CVV"></label>
-          </div>
-          <p class="checkout-note">This static checkout page collects order details only. To accept real payments, connect Stripe, PayPal, Shopify, or OpenCart payment processing.</p>
-        </div>
-      </div>
-
-      <div class="amazon-step">
-        <div class="step-number">3</div>
-        <div class="step-body">
-          <h2>Review items and shipping</h2>
-          <div id="checkout-items"></div>
-        </div>
-      </div>
-    </div>
-
-    <aside class="order-summary-card">
-      <button class="place-order-main" type="button" onclick="placeDemoOrder()">Place your order</button>
-      <p class="secure-note">Secure checkout summary</p>
-      <div id="checkout-summary"></div>
-      <div id="order-message"></div>
-    </aside>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div><h3>ANGFAN Brand Shop</h3></div>
-    <div><h3>Categories</h3><p>Home / Electronic / Beauty / Other</p></div>
-    <div><h3>Service</h3><p>ANGFANBRAND163@163.COM</p></div>
-  </div>
-</footer>
-<script src="/app.js"></script>
-</body>
-</html>
+<div class="topbar"><div class="topbar-inner"><span>Official Product Store</span><span>Customer Service: ANGFANBRAND163@163.COM</span></div></div>
+<header class="site-header"><div class="header-inner"><a class="logo" href="/"><span>ANGFAN</span><b>Brand Shop</b></a><form class="searchbar" action="/products.html"><input name="q" placeholder="Search products, SKU, ASIN"><button type="submit">Search</button></form><div class="quick-actions"><a href="/cart.html">Cart</a><a href="/checkout.html">Checkout</a><a href="/wishlist.html">Wishlist</a><a href="/compare.html">Compare</a><a href="/contact.html">Contact</a></div></div></header>
+<nav class="main-nav"><div class="nav-inner"><a href="/" class="">Home</a><a href="/products.html" class="">Products</a><a href="/products.html?category=Home%20Products" class="">Home Products</a><a href="/products.html?category=Electronic%20Products" class="">Electronic Products</a><a href="/products.html?category=Beauty%20Products" class="">Beauty Products</a><a href="/products.html?category=Other%20Products" class="">Other Products</a><a href="/contact.html" class="">Contact</a></div></nav>
+<main class="checkout-page"><div class="breadcrumb">Home / Checkout</div><h1 class="checkout-title">Checkout</h1><section class="checkout-layout"><div class="checkout-main"><div class="checkout-step"><div class="step-num">1</div><div class="step-content"><h2>Shipping address</h2><div class="form-grid"><label>Full Name<input id="checkoutName" placeholder="Full name"></label><label>Email<input id="checkoutEmail" placeholder="email@example.com"></label><label>Phone<input id="checkoutPhone" placeholder="Phone number"></label><label>Address<input id="checkoutAddress" placeholder="Street address"></label><label>City<input id="checkoutCity" placeholder="City"></label><label>State<input id="checkoutState" placeholder="State"></label><label>ZIP Code<input id="checkoutZip" placeholder="ZIP code"></label><label>Country<input id="checkoutCountry" value="United States"></label></div></div></div><div class="checkout-step"><div class="step-num">2</div><div class="step-content"><h2>Payment method</h2><div class="payment-grid"><label><input type="radio" name="payMethod" checked> Credit or Debit Card</label><label><input type="radio" name="payMethod"> PayPal</label><label><input type="radio" name="payMethod"> Invoice / Manual Payment</label></div><div class="form-grid"><label>Card Number<input id="cardNumber" placeholder="Card number"></label><label>Name on Card<input id="cardName" placeholder="Name on card"></label><label>Expiration<input id="cardExp" placeholder="MM / YY"></label><label>CVV<input id="cardCvv" placeholder="CVV"></label></div><p class="checkout-note">This static checkout page collects order details only. To accept real payments, connect Stripe, PayPal, Shopify, or OpenCart payment processing.</p></div></div><div class="checkout-step"><div class="step-num">3</div><div class="step-content"><h2>Review items and shipping</h2><div id="checkout-items"></div></div></div></div><aside class="summary-card"><button class="place-order" type="button" onclick="placeDemoOrder()">Place your order</button><p class="secure-note">Secure checkout summary</p><div id="checkout-summary"></div><div id="order-message"></div></aside></section></main>
+<footer class="footer"><div class="footer-inner"><div><h3>ANGFAN Brand Shop</h3></div><div><h3>Categories</h3><p>Home / Electronic / Beauty / Other</p></div><div><h3>Service</h3><p>ANGFANBRAND163@163.COM</p></div></div></footer>
+<script src="/app.js"></script></body></html>
