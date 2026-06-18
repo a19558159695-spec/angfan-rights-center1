@@ -1,14 +1,11 @@
-ANGFAN BRAND SHOP 静态产品显示修复版
+ANGFAN BRAND SHOP 详情页参考站布局版
 
-关键修复：
-1. 产品现在直接写进 products.html 和首页 HTML，不依赖 JS/fetch，所以不会一直 Loading。
-2. 每个产品生成独立详情页：/产品slug.html
-3. 当前产品数：44
-4. 按钮仍然可点击：Cart / Wishlist / Compare。
-5. 说明类文字已删除，页面更像正常购物网站。
-
-上传方式：
-- 解压后全部覆盖上传 GitHub
-- Commit changes
-- 等 Cloudflare 自动部署
-- 用 Ctrl + F5 强制刷新
+本次更新：
+1. 产品详情页已按参考图重做：
+   - 左侧大图
+   - 左下缩略图
+   - 右侧品牌、首发时间、版权信息、描述、数量、按钮、Available Options
+2. 两栏布局已修复，右侧信息不会跑到页面外。
+3. 每个产品仍是静态 HTML，产品不会再 Loading 不出来。
+4. 当前产品数量：44
+5. 图片使用 Amazon ASIN 图片地址；如 Amazon 图片无法加载，会自动回退到本地占位图。
