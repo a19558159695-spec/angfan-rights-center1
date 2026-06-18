@@ -1,15 +1,14 @@
-ANGFAN Brand Shop 最终内联样式修复版
+ANGFAN Brand Shop 最终正规版
 
-本版重点：
-1. 所有页面都内置 CSS 样式，不再依赖浏览器/Cloudflare 是否正确加载 style.css，避免主页、购物车、结算页再次乱版。
-2. 购物车 Proceed to Checkout 已做成明显黑色按钮，顶部和底部都有。
-3. Checkout 页面按大品牌/Amazon 类结算逻辑重排：
-   - 左侧分步骤：Shipping address / Payment method / Review items
-   - 右侧 Order Summary + 黄色 Place your order 按钮
-4. 主页重新做成完整布局：
-   - Hero 大图区域
-   - 促销入口卡片
-   - Shop by Category 彩色卡片
-   - 深色品牌横幅
+本次只针对你最新反馈修改，其他产品页/数据保持：
+1. 购物车 Proceed to Checkout 已做成明显黑色按钮形式，并可点击跳转。
+2. 主页重新做成更正规、更清晰的大品牌购物站结构：
+   - Hero Banner
+   - 服务承诺卡片
+   - Shop by Category
+   - 品牌横幅
    - Featured Products
-5. 保留：44 个产品页、$199.99、October 08, 2021、Cart/Checkout/Wishlist/Compare。
+   - Store Policies / Shipping / Return / Privacy / Terms / Customer Support
+3. 结算页保持清晰两栏结构：左侧信息填写，右侧订单汇总和 Place your order。
+4. 页面样式内联，避免 CSS 没加载造成乱版。
+5. 保留 $199.99、October 08, 2021、44 个产品页、Cart/Checkout/Wishlist/Compare。
