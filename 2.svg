@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
-<rect width="900" height="900" fill="#ffffff"/>
-<circle cx="450" cy="450" r="290" fill="#fecdd3" opacity="0.35"/>
-<text x="450" y="380" text-anchor="middle" font-family="Arial" font-size="70" font-weight="700" fill="#0f1f48">ANGFAN</text>
-<text x="450" y="470" text-anchor="middle" font-family="Arial" font-size="56" font-weight="700" fill="#2563eb">BRAND SHOP</text>
-<text x="450" y="560" text-anchor="middle" font-family="Arial" font-size="32" fill="#42536f">Gallery Image 2</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900"><rect width="900" height="900" fill="#fff"/><rect x="80" y="80" width="740" height="740" rx="24" fill="#f2f7ff" stroke="#dbeafe"/><text x="450" y="410" font-family="Arial" font-size="70" text-anchor="middle" font-weight="700" fill="#0b1a38">ANGFAN</text><text x="450" y="510" font-family="Arial" font-size="48" text-anchor="middle" font-weight="700" fill="#75c62d">PRODUCT</text></svg>
